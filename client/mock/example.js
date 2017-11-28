@@ -25,7 +25,33 @@ export function getExample(req, res, u) {
   }
 
   const params = getUrlParams(url);
-  const dataSource = [...tableListDataSource];
+  let dataSource = [...tableListDataSource];
+
+  if (params.sorter) {
+    const s = params.sorter.split('_');
+    dataSource = dataSource.sort((prev, next) => {
+      if (s[1] === 'descend') {
+        return next[s[0]] - prev[s[0]];
+      }
+      return prev[s[0]] - next[s[0]];
+    });
+  }
+
+  if (params.status) {
+    const status = params.status.split(',');
+    let filterDataSource = [];
+    status.forEach((s) => {
+      filterDataSource = filterDataSource.concat(
+        [...dataSource].filter(data => parseInt(data.status, 10) === parseInt(s[0], 10))
+      );
+    });
+    dataSource = filterDataSource;
+  }
+
+  if (params.title) {
+    dataSource = dataSource.filter(data => data.title.indexOf(params.title) > -1);
+  }
+
 
   let pageSize = 10;
   if (params.pageSize) {

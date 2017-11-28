@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import ExampleTable from '../../components/ExampleTable';
@@ -122,6 +123,19 @@ export default class Example extends PureComponent {
     });
   }
 
+  handlerCreate = (e) => {
+    e.preventDefault();
+    const { dispatch } = this.props;
+    dispatch(routerRedux.push('/list/search'));
+  }
+
+  handlerRemove = (key) => {
+    this.props.dispatch({
+      type: 'example/fetch',
+      payload: key,
+    });
+  }
+
   renderSimpleSearchForm() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -224,7 +238,7 @@ export default class Example extends PureComponent {
               {this.renderSearchForm()}
             </div>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" >
+              <Button icon="plus" type="primary" onClick={this.handlerCreate}>
                 新建
               </Button>
               {
@@ -245,6 +259,7 @@ export default class Example extends PureComponent {
               data={data}
               onSelectRow={this.handleSelectRows}
               onChange={this.handleTableChange}
+              onRemove={this.handlerRemove}
             />
           </div>
         </Card>

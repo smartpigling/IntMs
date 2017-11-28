@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import moment from 'moment';
-import { Table, Alert, Badge, Divider } from 'antd';
+import { Table, Popconfirm, Alert, Badge, Divider } from 'antd';
 import styles from './index.less';
 
 const statusMap = ['default', 'processing', 'success', 'error'];
@@ -17,8 +17,9 @@ class ExampleTable extends PureComponent {
     this.props.onChange(pagination, filters, sorter);
   }
 
+
   render() {
-    const { data: { list, pagination }, loading } = this.props;
+    const { data: { list, pagination }, loading, onRemove } = this.props;
 
     const status = ['关闭', '运行中', '已上线', '异常'];
 
@@ -64,11 +65,13 @@ class ExampleTable extends PureComponent {
       },
       {
         title: '操作',
-        render: () => (
+        render: (text, record) => (
           <div>
             <a href="">修改</a>
             <Divider type="vertical" />
-            <a href="">删除</a>
+            <Popconfirm title="是否要删除此行？" onConfirm={() => onRemove(record.id)}>
+              <a>删除</a>
+            </Popconfirm>
           </div>
         ),
       },
