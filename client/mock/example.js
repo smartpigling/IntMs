@@ -10,6 +10,7 @@ for (let i = 0; i < 50; i += 1) {
       description: '那是一种内在的东西，他们到达不了，也无法触及的',
       updatedAt: new Date(),
       member: '科学搬砖组',
+      status: Math.floor(Math.random() * 10) % 4,
       href: '',
       memberLink: '',
     }

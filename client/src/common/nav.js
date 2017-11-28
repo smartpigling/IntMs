@@ -171,7 +171,7 @@ export const getNavData = app => [
           {
             name: 'Example',
             path: 'example',
-            component: dynamicWrapper(app, [], () => import('../routes/Example/Example')),
+            component: dynamicWrapper(app, ['example'], () => import('../routes/Example/Example')),
           },
         ],
       },
