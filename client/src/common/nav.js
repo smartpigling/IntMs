@@ -16,6 +16,63 @@ export const getNavData = app => [
     path: '/',
     children: [
       {
+        name: '供应商管理',
+        icon: 'shop',
+        path: 'supms',
+        children: [
+          {
+            name: '供应商信息',
+            path: '',
+            component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
+            children: [
+              {
+                path: 'confirm',
+                component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step2')),
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: '项目管理',
+        icon: 'bars',
+        path: 'proms',
+        children: [
+          {
+            name: '项目计划',
+            path: '',
+            component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
+          },
+          {
+            name: '项目审批',
+            path: '',
+            component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
+          },
+          {
+            name: '合同管理',
+            path: '',
+            component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
+          },
+        ],
+      },
+      {
+        name: '人事管理',
+        icon: 'user',
+        path: 'hrms',
+        children: [
+          {
+            name: '组织架构',
+            path: '',
+            component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
+          },
+          {
+            name: '人员信息',
+            path: '',
+            component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
+          },
+        ],
+      },
+      {
         name: 'Dashboard',
         icon: 'dashboard',
         path: 'dashboard',
