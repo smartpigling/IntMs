@@ -18,41 +18,40 @@ export const getNavData = app => [
       {
         name: '供应商管理',
         icon: 'shop',
-        path: 'supms',
+        path: 'suppms',
         children: [
           {
-            name: '供应商信息',
-            path: '',
-            component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
-            children: [
-              {
-                path: 'confirm',
-                component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/StepForm/Step2')),
-              },
-            ],
+            name: '供应商库',
+            path: 'supp-info',
+            component: dynamicWrapper(app, ['list'], () => import('../routes/SuppMS/SuppInfo')),
+          },
+          {
+            name: '添加供应商',
+            path: 'supp-info-form',
+            component: dynamicWrapper(app, ['form'], () => import('../routes/SuppMS/SuppInfoForm')),
           },
         ],
       },
       {
         name: '项目管理',
         icon: 'bars',
-        path: 'proms',
+        path: 'projms',
         children: [
           {
             name: '项目计划',
-            path: '',
-            component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
+            path: 'proj-plan',
+            component: dynamicWrapper(app, ['list'], () => import('../routes/ProjMS/ProjPlan')),
           },
-          {
-            name: '项目审批',
-            path: '',
-            component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
-          },
-          {
-            name: '合同管理',
-            path: '',
-            component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
-          },
+          // {
+          //   name: '项目审批',
+          //   path: '',
+          //   component: dynamicWrapper(app, ['list'], () => import('../routes/Dashboard/Analysis')),
+          // },
+          // {
+          //   name: '合同管理',
+          //   path: '',
+          //   component: dynamicWrapper(app, ['list'], () => import('../routes/Dashboard/Analysis')),
+          // },
         ],
       },
       {
