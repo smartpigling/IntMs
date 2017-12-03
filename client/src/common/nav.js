@@ -38,7 +38,7 @@ export const getNavData = app => [
         path: 'projms',
         children: [
           {
-            name: '项目计划',
+            name: '项目进度',
             path: 'proj-plan',
             component: dynamicWrapper(app, ['list'], () => import('../routes/ProjMS/ProjPlan')),
           },

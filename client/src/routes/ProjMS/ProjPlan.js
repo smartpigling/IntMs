@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import moment from 'moment';
 import { connect } from 'dva';
-import { List, Card, Row, Col, Radio, Input, Progress, Button, Icon, Dropdown, Menu, Avatar } from 'antd';
+import { Popconfirm, List, Card, Row, Col, Radio, Input, Progress, Button, Icon, Dropdown, Menu, Avatar } from 'antd';
 
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import ProjPlanForm from '../../components/ProjMS/ProjPlanForm';
@@ -24,6 +24,30 @@ export default class ProjPlan extends PureComponent {
     });
   }
 
+  handleCreate(values) {
+    console.log(values);
+    // this.props.dispatch({
+    //   type: 'proj/create',
+    //   payload: values,
+    // });
+  }
+
+  handleEdit(id, values) {
+    console.log(id, values);
+    // this.props.dispatch({
+    //   type: '',
+    //   payload:{ id, values },
+    // });
+  }
+
+  handleRemove(id) {
+    console.log(id);
+    // this.props.dispatch({
+    //   type: 'proj/remove',
+    //   payload: id,
+    // });
+  }
+
   render() {
     const { list: { list, loading } } = this.props;
 
@@ -40,7 +64,7 @@ export default class ProjPlan extends PureComponent {
         <RadioGroup defaultValue="all">
           <RadioButton value="all">全部</RadioButton>
           <RadioButton value="progress">进行中</RadioButton>
-          <RadioButton value="waiting">等待中</RadioButton>
+          <RadioButton value="waiting">已完成</RadioButton>
         </RadioGroup>
         <Search
           className={styles.extraContentSearch}
@@ -73,24 +97,6 @@ export default class ProjPlan extends PureComponent {
       </div>
     );
 
-    const menu = (
-      <Menu>
-        <Menu.Item>
-          <a>编辑</a>
-        </Menu.Item>
-        <Menu.Item>
-          <a>删除</a>
-        </Menu.Item>
-      </Menu>
-    );
-
-    const MoreBtn = () => (
-      <Dropdown overlay={menu}>
-        <a>
-          更多 <Icon type="down" />
-        </a>
-      </Dropdown>
-    );
 
     return (
       <PageHeaderLayout>
@@ -98,13 +104,13 @@ export default class ProjPlan extends PureComponent {
           <Card bordered={false}>
             <Row>
               <Col sm={8} xs={24}>
-                <Info title="我的待办" value="8个任务" bordered />
+                <Info title="未完成" value="2个" bordered />
               </Col>
               <Col sm={8} xs={24}>
-                <Info title="本周任务平均处理时间" value="32分钟" bordered />
+                <Info title="已完成" value="22个" bordered />
               </Col>
               <Col sm={8} xs={24}>
-                <Info title="本周完成任务数" value="24个任务" />
+                <Info title="当月总任务" value="24个" />
               </Col>
             </Row>
           </Card>
@@ -112,16 +118,15 @@ export default class ProjPlan extends PureComponent {
           <Card
             className={styles.listCard}
             bordered={false}
-            title="标准列表"
+            title="项目列表"
             style={{ marginTop: 24 }}
             bodyStyle={{ padding: '0 32px 40px 32px' }}
             extra={extraContent}
           >
-            <Button type="dashed" style={{ width: '100%', marginBottom: 8 }} icon="plus">
-              添加
-            </Button>
-            <ProjPlanForm record={{}} >
-              <Button type="primary">Create User</Button>
+            <ProjPlanForm record={{}} onOk={() => this.handleCreate}>
+              <Button type="dashed" style={{ width: '100%', marginBottom: 8 }} icon="plus">
+                添加
+              </Button>
             </ProjPlanForm>
             <List
               size="large"
@@ -131,7 +136,14 @@ export default class ProjPlan extends PureComponent {
               dataSource={list}
               renderItem={item => (
                 <List.Item
-                  actions={[<a>编辑</a>, <MoreBtn />]}
+                  actions={[
+                    <ProjPlanForm record={item} onOk={() => this.handleEdit(item.id)}>
+                      <a>修改</a>
+                    </ProjPlanForm>,
+                    <Popconfirm title="是否要删除此行？" onConfirm={() => this.handleRemove(item.id)}>
+                      <a>删除</a>
+                    </Popconfirm>
+                  ]}
                 >
                   <List.Item.Meta
                     avatar={<Avatar src={item.logo} shape="square" size="large" />}
